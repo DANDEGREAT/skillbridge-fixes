@@ -21,8 +21,6 @@
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    transform: translateZ(0);
-    backface-visibility: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -66,7 +64,6 @@
 @layer components {
   .btn-press {
     transition: transform 0.1s ease;
-    will-change: transform;
   }
 
   .btn-press:active {
@@ -75,7 +72,6 @@
 
   .card-hover {
     transition: box-shadow 0.3s ease, transform 0.3s ease;
-    will-change: box-shadow, transform;
   }
 
   .card-hover:hover {
@@ -147,6 +143,16 @@
     color: #B8B0A4;
     border-radius: 999px;
   }
+
+  /* Fade in animation for scroll-triggered elements */
+  .fade-in-section {
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+  }
+
+  .fade-in-section.visible {
+    opacity: 1;
+  }
 }
 
 @layer utilities {
@@ -164,86 +170,6 @@
   }
 }
 
-/* Particle effect for hero */
-.particle {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(232, 150, 10, 0.8) 0%, rgba(196, 122, 0, 0) 70%);
-  pointer-events: none;
-  animation: floatParticle 8s ease-in-out infinite;
-}
-
-@keyframes floatParticle {
-  0%, 100% {
-    transform: translateY(0) translateX(0);
-    opacity: 0.3;
-  }
-  50% {
-    transform: translateY(-30px) translateX(15px);
-    opacity: 0.8;
-  }
-}
-
-/* Confetti */
-.confetti-piece {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  animation: confettiFall 3s ease-out forwards;
-}
-
-@keyframes confettiFall {
-  0% {
-    transform: translateY(-100vh) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh) rotate(720deg);
-    opacity: 0;
-  }
-}
-
-/* Hold button progress ring */
-.hold-progress {
-  transition: stroke-dashoffset 0.8s linear;
-}
-
-/* Map grid */
-.map-grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
-.map-road {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-/* Typing indicator dots */
-.typing-dot {
-  animation: typingBounce 1.4s infinite ease-in-out;
-}
-
-.typing-dot:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.typing-dot:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes typingBounce {
-  0%, 60%, 100% {
-    transform: translateY(0);
-    opacity: 0.4;
-  }
-  30% {
-    transform: translateY(-6px);
-    opacity: 1;
-  }
-}
-
 /* Online pulse */
 .online-pulse {
   animation: onlinePulse 2s infinite;
@@ -258,19 +184,5 @@
   }
   100% {
     box-shadow: 0 0 0 0 rgba(26, 107, 60, 0);
-  }
-}
-
-/* Urgent pulse */
-.urgent-pulse {
-  animation: urgentPulse 1.5s infinite;
-}
-
-@keyframes urgentPulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
   }
 }
