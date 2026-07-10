@@ -40,29 +40,25 @@ const testimonials = [
 const stats = [
   { value: 5000, suffix: '+', label: 'Verified Technicians' },
   { value: 25000, suffix: '+', label: 'Jobs Completed' },
-  { value: 0, prefix: '₦', label: 'Fraud Cases' },
-  { value: 4.8, suffix: '★', label: 'Average Rating', decimal: true },
+  { value: 0, prefix: '\u20A6', label: 'Fraud Cases' },
+  { value: 4.8, suffix: '\u2605', label: 'Average Rating', decimal: true },
 ];
 
-const trustPills = ['5,000+ Verified', '25,000+ Jobs', '₦0 Fraud', '4.8★ Rating'];
+const trustPills = ['5,000+ Verified', '25,000+ Jobs', '\u20A60 Fraud', '4.8\u2605 Rating'];
 
-// Simple fade-in component using IntersectionObserver
 function FadeInSection({ children, className = '', delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-50px' });
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    if (isInView && !visible) {
-      const timer = setTimeout(() => setVisible(true), delay);
-      return () => clearTimeout(timer);
-    }
-  }, [isInView, visible, delay]);
 
   return (
     <div
       ref={ref}
-      className={`transition-opacity duration-500 ease-out ${className} ${visible ? 'opacity-100' : 'opacity-0'}`}
+      className={className}
+      style={{
+        opacity: isInView ? 1 : 0,
+        transform: isInView ? 'translateY(0)' : 'translateY(12px)',
+        transition: `opacity 0.5s ease-out ${delay}ms, transform 0.5s ease-out ${delay}ms`,
+      }}
     >
       {children}
     </div>
